@@ -22,10 +22,10 @@
                 <tr *ngFor="let position of positions; let i = index;">
                     <td class="align-middle" data-label="Position">{{ position.position }}</td>
                     <td *ngIf="!isAuthorized" class="align-middle" data-label="Manpower">
-                        <span *ngIf="positions[i].selected_index !== -1">
+                        <span *ngIf="positions[i].selected_index !== 0">
                             {{ accounts[positions[i].selected_index].FIRST_NAME }} {{ accounts[positions[i].selected_index].LAST_NAME }}
                         </span>
-                        <span *ngIf="positions[i].selected_index === -1">
+                        <span *ngIf="positions[i].selected_index === 0">
                             
                         </span>
                     </td>
@@ -42,7 +42,7 @@
                             [(ngModel)]="positions[i].selected"
                             [attr.selected_index]="positions[i].selected_index"
                             #tdEditable >
-                            <option value="0">No Manpower Setup</option>
+                            <!-- <option value="0">No Manpower Setup</option> -->
                             <!-- FIX DISABLE ON LOAD -->
                             <option *ngFor="let account of accounts; let ii = index"
                                     [disabled]="account.DISABLED"
@@ -66,10 +66,11 @@
                             name="startTime"
                             #startTime
                             [mask]="'00:00'"
+                            (blur)="validateInput($event, i, 'start', 'blur')"
                             (ngModelChange)="handleInput(i)"
                             [(ngModel)]="manpowers[i].START_TIME"
                             (focus)="$event.target.select();"
-                            (keyup.enter)="time(startTime.value, $event)"
+                            (keyup.enter)="time(startTime.value, $event, i, 'start');"
                             (keydown.enter)="preventEnter($event)"
                             placeholder="HHmm"
                             #tdEditable />
@@ -90,10 +91,11 @@
                                 name="endTime" 
                                 #endTime
                                 [mask]="'00:00'"
+                                (blur)="validateInput($event, i, 'end', 'blur')"
                                 (ngModelChange)="handleInput(i)"
                                 [(ngModel)]="manpowers[i].END_TIME"
                                 (focus)="$event.target.select();"
-                                (keyup.enter)="time(endTime.value, $event)"
+                                (keyup.enter)="time(endTime.value, $event, i, 'end');"
                                 (keydown.enter)="preventEnter($event)"
                                 placeholder="HHmm"
                                 #tdEditable />
