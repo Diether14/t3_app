@@ -155,19 +155,6 @@ export class ManpowerComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  formatTime(event, i) {
-    const actualVal = event.replace(':', '');
-    if (actualVal.length === 4) {
-      const intVal = parseInt(actualVal, 10);
-      const arr = actualVal.split('');
-      const hour = arr[0] + arr[1];
-      const min = arr[2] + arr[3];
-      const showVal = moment().hours(hour).minutes(min).format('HH:mm');
-      this.manpowers[i].START_TIME = showVal;
-      console.log(showVal);
-     }
-  }
-
   preventEnter(e) {
     e.preventDefault();
   }
@@ -177,7 +164,6 @@ export class ManpowerComponent implements OnInit, AfterContentChecked {
   }
 
   async validateInput(event, index: number, input: string, reason: string) {
-    console.log(reason);
     let fulltime: string;
     let hasErrors = false;
     let message: string;
